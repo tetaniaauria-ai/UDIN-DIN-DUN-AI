@@ -1,0 +1,67 @@
+def tampilkan_menu():
+    print("=" * 40)
+    print("   WELCOME TO STORE WISDAN X ARAFAH   ")
+    print("=" * 40)
+    print("Daftar Produk:")
+    print("1. Kaos Eksklusif Wisdan    - Rp 150.000")
+    print("2. Hoodie Arafah Edition    - Rp 350.000")
+    print("3. Totebag Collab           - Rp  75.000")
+    print("4. Parfum Signature         - Rp 200.000")
+    print("5. Selesai & Bayar")
+    print("=" * 40)
+
+def main():
+    # Database produk sederhana
+    produk_list = {
+        1: ("Kaos Eksklusif Wisdan", 150000),
+        2: ("Hoodie Arafah Edition", 350000),
+        3: ("Totebag Collab", 75000),
+        4: ("Parfum Signature", 200000)
+    }
+    
+    keranjang = []
+    total_harga = 0
+
+    while True:
+        tampilkan_menu()
+        pilihan = input("Pilih produk (1-5): ")
+
+        if pilihan == '5':
+            break
+        
+        if pilihan.isdigit() and int(pilihan) in produk_list:
+            item = produk_list[int(pilihan)]
+            jumlah = int(input(f"Berapa banyak {item[0]}? "))
+            
+            subtotal = item[1] * jumlah
+            keranjang.append((item[0], jumlah, subtotal))
+            total_harga += subtotal
+            print(f"✅ Berhasil menambahkan {jumlah} {item[0]} ke keranjang.")
+        else:
+            print("❌ Pilihan tidak valid, silakan coba lagi.")
+
+    # Struk Pembayaran
+    if total_harga > 0:
+        print("\n" + "=" * 40)
+        print("         STRUK PEMBELIAN              ")
+        print("=" * 40)
+        for nama, qty, harga in keranjang:
+            print(f"{nama:<25} x{qty}  Rp {harga:,}")
+        
+        print("-" * 40)
+        
+        # Bonus: Diskon jika belanja di atas 500rb
+        diskon = 0
+        if total_harga > 500000:
+            diskon = total_harga * 0.1
+            print(f"Diskon Member (10%)       -Rp {int(diskon):,}")
+        
+        total_akhir = total_harga - diskon
+        print(f"TOTAL YANG HARUS DIBAYAR :  Rp {int(total_akhir):,}")
+        print("=" * 40)
+        print("  Terima kasih telah berbelanja!  ")
+    else:
+        print("\nKeranjang kosong. Sampai jumpa lagi!")
+
+if __name__ == "__main__":
+    main()
